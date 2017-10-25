@@ -69,3 +69,12 @@ history <- resnet %>% fit(
   callbacks = c(stopper, checker)
 )
 
+resnet <- load_model_hdf5('resnet_0.h5')
+
+preds <- resnet %>% predict(
+  X_test, batch_size = 2048
+)
+
+library(ramify)
+test_acc = sum(argmax(preds) == argmax(y_test))/nrow(y_test)
+print(test_acc)

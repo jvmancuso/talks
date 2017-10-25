@@ -55,3 +55,12 @@ history <- standard %>% fit(
   callbacks = c(stopper, checker)
 )
 
+standard <- load_model_hdf5('standard_0.h5')
+
+preds <- standard %>% predict(
+  X_test, batch_size = 2048
+)
+
+library(ramify)
+test_acc = sum(argmax(preds) == argmax(y_test))/nrow(y_test)
+print(test_acc)
